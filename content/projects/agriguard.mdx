@@ -1,0 +1,29 @@
+---
+title: "AgriGuard: AI-Powered Crop Disease Detection"
+description: "AI-powered crop disease detection system built for Ag Leader after collecting requirements directly from their team."
+thumbnail: "/next.svg"
+technologies: ["React Native", "Expo", "Python", "Flask", "Keras", "TensorFlow", "MobileNetV2", "Node.js", "Express", "MongoDB"]
+order: 1
+---
+
+## Overview
+
+Built for Ag Leader, an agriculture industry leader, after collecting requirements directly from the field. Every feature maps to a real farm problem.
+
+## Problem
+
+Crop disease identification takes days when waiting for a field expert visit, leading to potential crop loss.
+
+## Solution
+
+An AI-powered mobile application and IoT hardware integration that flags diseases in seconds and automatically manages irrigation and alerts.
+
+## Features & Architecture
+
+- **Machine Learning**: Trained a MobileNetV2 transfer learning model across 39 crop disease classes with an EfficientNetB0 plant gate that rejects non-crop images before inference. Achieved 95% accuracy.
+- **Backend**: Built a Node.js/Express REST API with JWT auth, scan history, and a pesticide database so the app tells the farmer what to spray and when.
+- **Hardware Integration**: Wired an ESP32-CAM for automated image capture and a relay module for water pump control. Both are manageable remotely through the mobile app.
+
+## Results
+
+Disease identification reduced from days to seconds. No on-site intervention needed for basic irrigation management.

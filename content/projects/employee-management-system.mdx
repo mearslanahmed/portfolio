@@ -1,0 +1,25 @@
+---
+title: "Employee Management System"
+description: "A desktop application with real-time multilingual support and strict data isolation."
+thumbnail: "/next.svg"
+technologies: ["C#", "Windows Forms", "MS SQL Server", "ADO.NET", ".NET Framework"]
+order: 7
+---
+
+## Overview
+
+A robust enterprise desktop application designed for managing staff data, with a strong focus on accessibility for international teams and strict architectural separation.
+
+## Problem
+
+Many legacy internal tools are locked to a single language and suffer from tightly coupled code, making updates to the database or UI dangerously intertwined.
+
+## Solution
+
+A system built from the ground up for runtime language switching and strict separation of concerns using the Data Access Layer pattern.
+
+## Features & Architecture
+
+- **Multilingual Support**: Features true runtime language switching across English, French, Spanish, and Urdu. Non-English staff can use the system instantly without needing a UI rebuild or restart.
+- **Strict Data Isolation**: All database operations live entirely in a dedicated `DataAccessLibrary`. The UI layer knows absolutely nothing about SQL, preventing injection flaws and making the database easily swappable.
+- **Enterprise Tech Stack**: Built reliably on C#, Windows Forms, and MS SQL Server using ADO.NET for high-performance data querying.

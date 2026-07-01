@@ -1,0 +1,25 @@
+---
+title: "ReelTime: Movie Ticket Booking App"
+description: "A real-time movie ticket booking app with instant QR code generation and Firebase sync."
+thumbnail: "/next.svg"
+technologies: ["Kotlin", "Android SDK", "Firebase", "ZXing", "Material Design"]
+order: 4
+---
+
+## Overview
+
+ReelTime is a complete movie ticket booking experience built for Android that handles everything from seat selection to venue entry using QR codes.
+
+## Problem
+
+Double bookings and friction at the theater entrance are common pain points in legacy ticketing systems.
+
+## Solution
+
+A real-time synchronized app that locks seats instantly to prevent conflicts and generates scannable QR codes for seamless entry.
+
+## Features & Architecture
+
+- **Real-Time Sync**: Seat selection syncs over Firebase Realtime Database. If two users pick the same seat, the conflict is caught immediately, not at checkout.
+- **QR Ticketing**: Bookings generate a QR ticket instantly via ZXing. There is no physical ticket, eliminating friction at venue entry.
+- **Modern UI**: Designed with Material Design principles for a native, smooth Android experience.
