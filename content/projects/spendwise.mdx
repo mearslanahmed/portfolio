@@ -1,25 +1,48 @@
 ---
-title: "SpendWise: Expense & Income Management App"
-description: "Expense and income management app with category-based bar chart analytics and a shared component architecture."
-thumbnail: "/projects/spendwise.png"
-technologies: ["React Native", "TypeScript", "Firebase", "Expo", "Context API"]
+title: "SpendWise: AI-Powered Personal Finance"
+description: "The definitive AI-powered personal finance tracker with automated receipt scanning and a dedicated AI financial advisor."
+thumbnail: "/projects/spendwise.webp"
+technologies: ["React Native", "Expo", "Next.js", "Firebase", "Google Gemini AI", "Groq"]
+githubUrl: "https://github.com/mearslanahmed/spendwise-react-native"
+webGithubUrl: "https://github.com/mearslanahmed/spendwise-web"
+liveUrl: "https://spendwiseapp.tech"
 order: 2
 ---
 
 ## Overview
 
-A robust mobile application designed to help users understand their financial habits through data visualization and intuitive tracking.
+SpendWise is a next-generation personal finance application built for Android and iOS. It combines robust expense tracking with cutting-edge Artificial Intelligence to automatically scan receipts and provide personalized financial advice.
 
-## Problem
+While the mobile app is built with **React Native** and **Expo**, its Artificial Intelligence features are powered by a highly-optimized **Next.js** backend API, ensuring API keys remain completely secure and processing is blazing fast.
 
-Most expense tracking apps present a raw list of transactions which makes it hard to see where money actually goes. They also often suffer from data integrity issues, such as deleting a wallet without deleting its associated transactions.
+## The Problem
 
-## Solution
+Traditional expense tracking apps require tedious manual data entry and often present a raw list of transactions, making it hard to see where money actually goes. Furthermore, generating actionable insights from hundreds of transactions is a massive cognitive load for the average user.
 
-SpendWise solves these issues by providing category-based bar chart analytics and strict relational data rules.
+## The Solution
 
-## Features & Architecture
+By leveraging the **Google Gemini API** and **Groq**, SpendWise completely automates the data entry process. Users simply snap a photo of a receipt, and the app handles the extraction and categorization. The built-in AI advisor acts as a personal accountant, providing contextual insights and conversational budgeting advice.
 
-- **Analytics**: Built category-based bar chart analytics so users see exactly where money is spent.
-- **Data Integrity**: Removing a wallet deletes all linked transactions automatically, fixing a common data integrity problem in expense apps.
-- **Cross-Platform Parity**: Shared component architecture keeps iOS and Android behavior identical without platform-specific patches scattered through the codebase.
+## Key Features
+
+- **AI Receipt Scanner:** Instantly extracts the merchant, total amount, and categorizes the transaction automatically from a photo.
+- **AI Financial Advisor:** Chat with a dedicated AI assistant directly in the app to get personalized budgeting advice and insights into spending habits.
+- **Advanced Analytics:** Interactive charts to visualize cash flow and spending trends over time.
+- **Multi-Wallet Architecture:** Segregate funds into different wallets (Checking, Savings, Crypto, Cash) and track transfers between them.
+- **Budget & Subscriptions:** Create robust monthly budgets and keep track of active subscriptions to ensure no surprise charges.
+- **Enterprise-Grade Security:** Fully secured by Firebase Authentication and strict Firestore security rules.
+
+## Tech Stack & Architecture
+
+### Mobile App (Frontend)
+- Built with **React Native (0.76.5)** and **Expo (54.0)** for smooth cross-platform performance.
+- **Expo Router (6.0)** for modern, file-based navigation.
+- **TypeScript** for strict type-safety across the entire codebase.
+- **Firebase Firestore** for real-time NoSQL database syncing across devices instantly.
+- **Cloudinary** for a blazing-fast CDN storing highly compressed receipt images.
+
+### Web API & Marketing (Backend)
+The marketing website and AI backend are hosted on a separate custom server.
+- Built with **Next.js 15 (App Router)** and **Tailwind CSS (v4)**.
+- Exposes the `/api/ai-receipt` endpoint to securely process Cloudinary image URLs using Google Gemini and Groq, feeding structured financial data directly back to the mobile app.
+- Hosted on **Vercel** for instant edge deployment.

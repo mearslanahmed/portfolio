@@ -1,23 +1,41 @@
 import type { Metadata } from "next";
-import { Geist, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { DM_Sans } from "next/font/google";
 
-const inter = Inter({
-  variable: "--font-inter",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Arslan Ahmed Naseem | Mobile & Software Developer",
-  description: "Portfolio of Arslan Ahmed Naseem, a mobile and software developer specializing in React Native, Node.js, and ML.",
+  metadataBase: new URL("https://arslanahmed.me"),
+  title: "Arslan Ahmed Naseem | Full-Stack Software Engineer",
+  description: "Portfolio of Arslan Ahmed Naseem, a Full-Stack Software Engineer specializing in Mobile Development, AI Integration, and Full-Stack Architecture.",
+  openGraph: {
+    title: "Arslan Ahmed Naseem | Full-Stack Software Engineer",
+    description: "Software Engineer specializing in Mobile Development, AI Integration, and Full-Stack Architecture.",
+    url: "https://arslanahmed.me",
+    siteName: "Arslan Ahmed Portfolio",
+    images: [
+      {
+        url: "/profile.webp",
+        width: 800,
+        height: 800,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arslan Ahmed Naseem | Full-Stack Software Engineer",
+    description: "Software Engineer specializing in Mobile Development, AI Integration, and Full-Stack Architecture.",
+    images: ["/profile.webp"],
+  },
 };
 
 export default function RootLayout({
@@ -29,9 +47,46 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${inter.variable} antialiased`}
+      className={`${dmSans.variable} antialiased`}
     >
-      <body className="min-h-screen bg-background text-foreground selection:bg-primary/30 flex flex-col">
+      <body suppressHydrationWarning className="min-h-screen bg-background text-foreground selection:bg-primary/30 flex flex-col">
+        {/* JSON-LD Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": "https://arslanahmed.me/#person",
+                  name: "Arslan Ahmed Naseem",
+                  url: "https://arslanahmed.me",
+                  image: "https://arslanahmed.me/profile.webp",
+                  jobTitle: "Full-Stack Software Engineer",
+                  description:
+                    "Software Engineer specializing in Mobile Development, AI Integration, and Full-Stack Architecture.",
+                  sameAs: [
+                    "https://github.com/mearslanahmed",
+                    "https://linkedin.com/in/mearslanahmed",
+                    "https://www.fiverr.com/users/mearslanahmed",
+                    "https://medium.com/@mearslanahmed",
+                    "https://www.youtube.com/@mearslanahmed",
+                  ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://arslanahmed.me/#website",
+                  url: "https://arslanahmed.me",
+                  name: "Arslan Ahmed Portfolio",
+                  description:
+                    "Portfolio of Arslan Ahmed Naseem, a Full-Stack Software Engineer specializing in Mobile Development, AI Integration, and Full-Stack Architecture.",
+                  author: { "@id": "https://arslanahmed.me/#person" },
+                },
+              ],
+            }),
+          }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

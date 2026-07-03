@@ -1,25 +1,38 @@
 ---
 title: "Employee Management System"
-description: "A desktop application with real-time multilingual support and strict data isolation."
-thumbnail: "/next.svg"
-technologies: ["C#", "Windows Forms", "MS SQL Server", "ADO.NET", ".NET Framework"]
+description: "An enterprise Windows Forms application featuring real-time multilingual support and strict multi-project data isolation."
+thumbnail: ""
+technologies: ["C#", ".NET Framework", "Windows Forms", "SQL Server", "ADO.NET"]
+githubUrl: "https://github.com/mearslanahmed/Employee-Managment-System"
 order: 7
 ---
 
 ## Overview
 
-A robust enterprise desktop application designed for managing staff data, with a strong focus on accessibility for international teams and strict architectural separation.
+The **Employee Management System** is a robust enterprise desktop application written in C#. Designed with a strong focus on accessibility and strict architectural separation, it serves as a central control panel to manage employee data, accounts, allowances, departments, and salaries through a highly customized graphical interface.
 
-## Problem
+## The Problem
 
-Many legacy internal tools are locked to a single language and suffer from tightly coupled code, making updates to the database or UI dangerously intertwined.
+Many legacy internal HR tools suffer from tightly coupled code—making database updates dangerously intertwined with the UI. Furthermore, they are often locked to a single language, creating friction for international teams and diverse workforces.
 
-## Solution
+## The Solution
 
-A system built from the ground up for runtime language switching and strict separation of concerns using the Data Access Layer pattern.
+A modular system built from the ground up utilizing a multi-project architecture to enforce strict separation of concerns. The application features true runtime language switching and completely isolates database logic from the presentation layer.
 
-## Features & Architecture
+## Key Features
 
-- **Multilingual Support**: Features true runtime language switching across English, French, Spanish, and Urdu. Non-English staff can use the system instantly without needing a UI rebuild or restart.
-- **Strict Data Isolation**: All database operations live entirely in a dedicated `DataAccessLibrary`. The UI layer knows absolutely nothing about SQL, preventing injection flaws and making the database easily swappable.
-- **Enterprise Tech Stack**: Built reliably on C#, Windows Forms, and MS SQL Server using ADO.NET for high-performance data querying.
+- **Multilingual Dashboard:** Features true runtime language switching across English, French, Spanish, and Urdu (`en-US`, `fr-FR`, `es-ES`, `ur-PK`). Non-English staff can use the system instantly without needing a UI rebuild or restart.
+- **Strict Data Isolation:** All database CRUD operations live entirely in a dedicated `DataAccessLibrary`. The UI layer knows absolutely nothing about SQL, preventing injection flaws and making the database easily swappable.
+- **Custom UI Controls:** A dedicated `EMSCControls` module provides custom Windows Forms components (labels, buttons, textboxes) to ensure absolute visual consistency across the entire application.
+- **Comprehensive Management:** Securely add, update, delete, and view employee accounts, allowances, and salaries.
+
+## Tech Stack & Architecture
+
+- **Language:** C#
+- **Framework:** .NET Framework (Windows Forms)
+- **Database:** MS SQL Server
+- **Data Access:** ADO.NET for high-performance, raw SQL querying.
+- **Project Structure:** 
+  - `EmployeeManagmentSystem/` – Main Windows Forms application logic and routing.
+  - `DataAccessLibrary/` – Isolated layer handling all database CRUD operations.
+  - `EMSCControls/` – Extracted custom Windows Forms UI components.

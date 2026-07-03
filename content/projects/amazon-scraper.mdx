@@ -1,0 +1,33 @@
+---
+title: "Amazon Data Scraper"
+description: "An automated Python script utilizing Selenium to scrape and extract structured product data from Amazon."
+thumbnail: ""
+technologies: ["Python", "Selenium", "Chrome WebDriver", "openpyxl"]
+githubUrl: "https://github.com/mearslanahmed/Amazon_Product_Data_Scraper"
+order: 8
+---
+
+## Overview
+
+A focused Python automation script designed to extract comprehensive product information directly from Amazon search results. This project was built to automate data collection for research and market analysis, outputting structured data directly into Excel spreadsheets.
+
+## The Problem
+
+Manually collecting product data (prices, titles, review counts) for competitive analysis or personal research is incredibly tedious and prone to human error, especially when filtering through thousands of Amazon listings.
+
+## The Solution
+
+An automated scraping tool built with **Selenium** that programmatically launches a browser, applies complex user-defined filters, and parses the DOM to extract structured data into an `.xlsx` format.
+
+## Key Features
+
+- **Automated Browser Control**: Utilizes the Chrome WebDriver via Selenium to mimic human interaction, applying category and brand filters (e.g., HP, Lenovo laptops) automatically.
+- **Data Extraction**: Accurately parses the Amazon DOM to extract critical product details, including titles, current prices, and total review counts.
+- **Excel Generation**: Automatically structures and exports the raw scraped data into a formatted Excel (`.xlsx`) sheet using the `openpyxl` library for easy downstream analysis.
+
+## Tech Stack & Architecture
+
+- **Language:** Python 3.x
+- **Automation:** Selenium WebDriver
+- **Data Export:** `openpyxl` for generating Excel spreadsheets
+- **Architecture:** A lightweight, highly configurable script meant to be run via the CLI, with easily modifiable scraping parameters.

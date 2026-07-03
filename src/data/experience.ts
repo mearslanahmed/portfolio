@@ -30,10 +30,9 @@ export const experienceData: Experience[] = [
     startDate: "Jan 2024",
     endDate: "Present",
     description: [
-      "Served clients across Saudi Arabia, Malaysia, India, and the United States, maintaining a 5.0 rating, consistently praised for clean code and fast turnaround.",
-      "Collaborated with an independent developer on a mobile app, contributing to API integration and backend troubleshooting.",
-      "Built several websites for clients, managing revision cycles and delivering technical documentation post-launch.",
-      "Delivered solutions across C#, Python, and web development, C++, same problem solving approach I apply to mobile development with Kotlin and React Native."
+      "Maintained a perfect 5.0/5.0 client satisfaction rating across a diverse portfolio of international and local clients by delivering scalable web and mobile applications with rapid turnaround times.",
+      "Engineered and shipped cross-platform mobile applications, seamlessly integrating complex REST APIs and optimizing backend infrastructure for high-performance deployments.",
+      "Architected robust technical solutions across C++, Python, and React Native, establishing rigorous technical documentation standards that guaranteed zero-friction client handovers."
     ]
   }
 ];

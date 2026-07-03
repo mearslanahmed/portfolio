@@ -13,27 +13,27 @@ export const certificationsData: Certification[] = [
     name: "React Native Specialization",
     issuer: "Meta – Coursera",
     link: "https://coursera.org/verify/specialization/PXKED3BSKX3O",
-    image: "/certifications/react-native.jpeg"
+    image: "/certifications/react-native.webp"
   },
   {
     id: "meta-kotlin",
     name: "Programming Fundamentals in Kotlin",
     issuer: "Meta – Coursera",
     link: "https://coursera.org/verify/RCWXQXI4DJCY",
-    image: "/certifications/kotlin.jpeg"
+    image: "/certifications/kotlin.webp"
   },
   {
     id: "ibm-mobile",
     name: "Introduction to Mobile App Development",
     issuer: "IBM – Coursera",
     link: "https://coursera.org/verify/OTBS7JTVU0H8",
-    image: "/certifications/ibm.jpeg"
+    image: "/certifications/ibm.webp"
   },
   {
     id: "meta-frontend-capstone",
     name: "Front-End Developer Capstone",
     issuer: "Meta – Coursera",
     link: "https://coursera.org/verify/5U0NPTO4D4I8",
-    image: "/certifications/frontend-capstone.jpeg"
+    image: "/certifications/frontend-capstone.webp"
   }
 ];

@@ -11,7 +11,10 @@ export interface ProjectMetadata {
   thumbnail: string;
   technologies: string[];
   githubUrl?: string;
+  webGithubUrl?: string;
   liveUrl?: string;
+  videoUrl?: string;
+  downloadUrl?: string;
   order?: number;
 }
 
