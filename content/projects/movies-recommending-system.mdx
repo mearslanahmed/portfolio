@@ -1,25 +1,38 @@
 ---
 title: "Movies Recommending System"
-description: "A content-based recommendation engine built entirely in Python and deployed on Streamlit."
-thumbnail: "/next.svg"
-technologies: ["Python", "Scikit-learn", "Pandas", "NumPy", "Streamlit"]
+description: "A machine learning-based content recommendation engine built in Python and deployed on Streamlit."
+thumbnail: ""
+technologies: ["Python", "Scikit-Learn", "Pandas", "NumPy", "Streamlit", "Jupyter"]
+githubUrl: "https://github.com/mearslanahmed/Movies_Recommending_System"
+liveUrl: "https://moviesrecommendingsystem.streamlit.app/"
 order: 6
 ---
 
 ## Overview
 
-A robust movie recommendation engine that goes beyond simple genre matching by analyzing deep content features like cast and keywords to deliver highly relevant suggestions.
+The **Movies Recommending System** is a machine learning-based recommendation engine built entirely in Python. It leverages sophisticated data processing and similarity algorithms to provide personalized movie recommendations to users based on what they already love.
 
-## Problem
+The entire data pipeline was developed and trained in Jupyter Notebooks, and the final engine is deployed as a highly interactive, serverless web application via Streamlit.
 
-Basic recommendation systems often rely solely on genres, resulting in generic suggestions that miss the nuanced similarities between films.
+## The Problem
 
-## Solution
+Basic recommendation systems often rely solely on genres, resulting in generic suggestions that miss the nuanced similarities between films. Users need a system that understands the deeper context and "vibe" of a movie to provide truly relevant suggestions.
 
-A content-based approach utilizing natural language processing and vector math to calculate true similarity scores across multidimensional movie data.
+## The Solution
 
-## Features & Architecture
+A content-based approach utilizing natural language processing and vector mathematics. By calculating true similarity scores across multidimensional movie data (such as cast, crew, and keywords), the system can recommend movies that share the same DNA, rather than just sharing a broad genre tag.
 
-- **Intelligent Engine**: Uses `CountVectorizer` and cosine similarity to factor in cast and keywords—not just genre—for much more accurate and relevant suggestions.
-- **Serverless Architecture**: The entire system runs as a single Python file deployed on Streamlit Cloud, requiring absolutely no traditional backend or infrastructure.
-- **Data Pipeline**: Leverages Pandas and NumPy for efficient data cleaning, normalization, and feature extraction from raw movie datasets.
+## Key Features
+
+- **Intelligent Engine:** Analyzes deep content features using `CountVectorizer` and cosine similarity metrics to deliver highly relevant suggestions.
+- **Serverless Architecture:** The final system runs as an interactive web app deployed on Streamlit Cloud, requiring no traditional backend or complex infrastructure to scale.
+- **Robust Data Pipeline:** Leverages Pandas and NumPy for efficient data cleaning, normalization, and feature extraction from raw movie datasets.
+- **Precomputed Artifacts:** The system utilizes preprocessed datasets and precomputed similarity matrices (stored as `.pkl` files) to ensure blazing-fast execution speeds in production.
+- **Modular Jupyter Core:** The core logic is structured in an extensible Jupyter Notebook (`MRS.ipynb`), making experimentation and parameter tuning incredibly straightforward.
+
+## Tech Stack & Architecture
+
+- **Language:** Python 3.x
+- **Data Science:** Pandas, NumPy, Scikit-Learn
+- **Deployment:** Streamlit Cloud
+- **Development Environment:** Jupyter Notebook

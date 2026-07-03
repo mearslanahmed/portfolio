@@ -1,29 +1,57 @@
 ---
 title: "AgriGuard: AI-Powered Crop Disease Detection"
-description: "AI-powered crop disease detection system built for Ag Leader after collecting requirements directly from their team."
-thumbnail: "/projects/agriguard.png"
-technologies: ["React Native", "Expo", "Python", "Flask", "Keras", "TensorFlow", "MobileNetV2", "Node.js", "Express", "MongoDB"]
+description: "A full-stack smart farming system combining React Native, Node.js, a two-stage deep learning pipeline, and IoT hardware for automated irrigation."
+thumbnail: "/projects/agriguard.webp"
+technologies: ["React Native", "Node.js", "TensorFlow", "Flask", "MongoDB", "ESP32"]
+githubUrl: "https://github.com/mearslanahmed/AgriGuard"
+liveUrl: "https://mearslanahmed.github.io/AgriGuard/"
+downloadUrl: "https://github.com/mearslanahmed/AgriGuard/releases/tag/v1.0.0"
 order: 1
 ---
 
 ## Overview
 
-Built for Ag Leader, an agriculture industry leader, after collecting requirements directly from the field. Every feature maps to a real farm problem.
+AgriGuard is a full-stack smart farming system built for agricultural leaders and farmers. When a user photographs a crop leaf, the system identifies the crop and disease using a complex two-stage deep learning pipeline, returning a complete pesticide advisory including dosage, spray interval, and safety guidelines. 
 
-## Problem
+Additionally, an ESP32-based custom hardware module handles real-time soil moisture monitoring and automated water pump control.
 
-Crop disease identification takes days when waiting for a field expert visit, leading to potential crop loss.
+**10 crops · 76 disease classes · 99.15% crop accuracy · 94.86% disease accuracy**
 
-## Solution
+## The Problem
 
-An AI-powered mobile application and IoT hardware integration that flags diseases in seconds and automatically manages irrigation and alerts.
+Crop disease identification traditionally takes days when waiting for a field expert visit, leading to potential crop loss. Furthermore, manual irrigation management requires constant physical presence and guesswork regarding soil moisture levels.
 
-## Features & Architecture
+## The Solution
 
-- **Machine Learning**: Trained a MobileNetV2 transfer learning model across 39 crop disease classes with an EfficientNetB0 plant gate that rejects non-crop images before inference. Achieved 95% accuracy.
-- **Backend**: Built a Node.js/Express REST API with JWT auth, scan history, and a pesticide database so the app tells the farmer what to spray and when.
-- **Hardware Integration**: Wired an ESP32-CAM for automated image capture and a relay module for water pump control. Both are manageable remotely through the mobile app.
+An AI-powered mobile application integrated with custom IoT hardware. The system flags diseases in seconds with extremely high accuracy and automatically manages irrigation and alerts, eliminating guesswork and significantly reducing response times.
 
-## Results
+## Key Features
 
-Disease identification reduced from days to seconds. No on-site intervention needed for basic irrigation management.
+- **Disease Detection**: Two-stage `EfficientNetB3` pipeline with a "crop gate" that rejects unknowns before the disease classifier runs. Images can be captured via mobile camera, gallery, or remotely via an ESP32-CAM.
+- **Pesticide Advisory**: A MongoDB-backed advisory collection covers all 76 disease classes, returning exact pesticide names, dosages, and safety precautions.
+- **Smart Irrigation**: ESP32-WROOM reads soil moisture and controls a 5V pump via a relay. Supports remote manual ON/OFF and a fully automated mode based on moisture thresholds.
+- **Robust Authentication**: OTP-based email verification, bcrypt password hashing, JWT sessions, and isolated user profiles.
+- **Scan History**: All results are persisted with crop, disease label, confidence scores, and timestamps with strict user-scoped access control.
+
+## Tech Stack & Architecture
+
+This project is a massive monorepo comprising a mobile frontend, a REST API, an ML server, and C++ hardware code.
+
+### Machine Learning Pipeline (Flask & TensorFlow)
+- Two-model architecture built on **EfficientNetB3** backbones.
+- Model 1 (Crop Classifier): Validates the image is a supported crop (99.15% accuracy).
+- Model 2 (Disease Classifier): Identifies the specific disease from 76 classes (94.86% accuracy).
+- Hosted independently on **HuggingFace Spaces** via a highly concurrent **Flask** API.
+
+### Backend Infrastructure (Node.js & MongoDB)
+- Built with **Node.js** and **Express**, deployed on **Render**.
+- **MongoDB Atlas** database for user auth, scan history, and pesticide advisories.
+- Acts as a secure IoT proxy for communication with local hardware devices over the network.
+
+### Mobile Application (React Native)
+- Built with **React Native** and **Expo**.
+- Manages user sessions, displays rich analysis history, and acts as a remote control for hardware pumps.
+
+### IoT Hardware (ESP32 / C++)
+- Custom **ESP32-CAM** integration for remote field photography.
+- Custom **ESP32-WROOM** integration with moisture sensors and relays. Implements dynamic IP registration at boot to ensure bulletproof connectivity without relying on local DNS.

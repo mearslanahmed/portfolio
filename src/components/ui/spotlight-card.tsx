@@ -49,7 +49,7 @@ export function SpotlightCard({
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative rounded-3xl border border-border bg-surface overflow-hidden transition-colors duration-500 hover:border-primary/50 ${className}`}
+      className={`relative rounded-3xl border border-border bg-surface overflow-hidden transition-colors duration-500 hover:border-secondary-text/30 ${className}`}
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"

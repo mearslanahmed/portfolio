@@ -1,25 +1,41 @@
 ---
 title: "Kaffeine: Coffee Shop Ordering App"
-description: "A digital menu and in-app order flow built for small businesses with clean architecture."
-thumbnail: "/next.svg"
-technologies: ["Kotlin", "Android SDK", "Firebase Auth", "Firestore", "Material Design"]
+description: "A digital menu and in-app order flow built for small businesses with a strict MVVM Kotlin architecture."
+thumbnail: ""
+technologies: ["Kotlin", "Android SDK", "MVVM", "Firebase", "Material Design", "Jetpack"]
+githubUrl: "https://github.com/mearslanahmed/kaffeine-android"
+downloadUrl: "https://github.com/mearslanahmed/kaffeine-android/releases"
 order: 5
 ---
 
 ## Overview
 
-Kaffeine replaces traditional counter ordering with a seamless digital menu and in-app order flow tailored specifically for small coffee shops and local businesses.
+KAFFEINE is a modern, feature-rich Android application designed specifically for coffee lovers and local cafes. It replaces traditional counter ordering with a seamless digital menu and in-app order flow. Built with a focus on a clean, intuitive user interface, the app leverages the power of Firebase for serverless, real-time backend services.
 
-## Problem
+## The Problem
 
-Small businesses often rely on chaotic counter ordering and lack the technical team to run and maintain expensive enterprise POS or ordering systems.
+Small coffee businesses often rely on chaotic manual counter ordering and lack the technical team required to run and maintain expensive enterprise POS systems. Customers wait in lines and have no visibility into when their order will actually be ready.
 
-## Solution
+## The Solution
 
-A lightweight, robust Android application that handles the entire ordering lifecycle with zero necessary on-site technical infrastructure.
+A lightweight, robust native Android application that handles the entire ordering lifecycle with zero necessary on-site technical infrastructure. Customers can browse dynamic menus, manage shopping carts, apply discounts, and track their order status in real-time without standing in line.
 
-## Features & Architecture
+## Key Features
 
-- **Clean Architecture**: Built with UI, logic, and data layers fully separated. Adding a new feature doesn't require touching the entire codebase.
-- **Serverless Backend**: Utilizes Firebase Authentication and Cloud Firestore for real-time inventory and order syncing without maintaining a custom server.
-- **Native Android UI**: Leverages RecyclerView and Material Design for a highly responsive, native feel.
+- **Interactive Dashboard:** A beautiful home screen featuring a promotional banner, a list of coffee categories, and a grid of popular items.
+- **Robust Order Management:** A complete checkout process that saves orders to Firestore. A dedicated "My Orders" screen tracks current and past history.
+- **Real-Time Status & Tracking:** A live countdown timer displays the estimated arrival time for new orders, automatically updating to "Delivered".
+- **Cart & Wishlist:** Fully functional shopping cart with quantity adjustments and a personal wishlist for favorite items.
+- **Discount Engine:** Built-in support for dynamically applying promotional discount codes at checkout.
+- **In-App Notifications:** Automated alerts generated when an order is placed and when it is successfully delivered.
+
+## Tech Stack & Architecture
+
+- **Native Android Framework:** Built purely in **Kotlin** leveraging the robust **Android SDK**.
+- **MVVM Architecture:** Strict adherence to Model-View-ViewModel architecture ensuring that UI, logic, and data layers are fully decoupled for high maintainability.
+- **Android Jetpack:** Deep integration with modern Jetpack libraries including **ViewModel**, **View Binding**, and **RecyclerView** for smooth scrolling and complex state management.
+- **UI & Styling:** Built using complex `ConstraintLayout` structures and **Material Design Components** to deliver a highly polished, premium native feel.
+- **Serverless Backend (Firebase):** 
+  - **Firebase Authentication** handles secure Email/Password onboarding and dynamic user profiles.
+  - **Cloud Firestore** manages real-time inventory, pricing, and order syncing instantly across devices without the need to maintain a custom server.
+- **Image Processing:** Utilizes **Glide** for highly optimized, asynchronous image loading and caching.
