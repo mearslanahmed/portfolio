@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
-import { ArrowLeft, ArrowRight, ExternalLink, PlayCircle, Download } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, Download } from "lucide-react";
 import { ShareProject } from "@/components/ShareProject";
 import type { Metadata } from "next";
 
@@ -38,6 +38,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: project.metadata.description,
     alternates: {
       canonical: projectUrl,
+      languages: {
+        "en-US": projectUrl,
+      },
     },
     openGraph: {
       title: `${project.metadata.title} | Arslan Ahmed Naseem`,
@@ -88,6 +91,29 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <article className="min-h-screen pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": project.metadata.title,
+            "description": project.metadata.description,
+            "applicationCategory": "WebApplication",
+            "operatingSystem": "Any",
+            "author": {
+              "@type": "Person",
+              "name": "Arslan Ahmed Naseem",
+              "url": "https://arslanahmed.me"
+            },
+            "url": project.metadata.liveUrl || `https://arslanahmed.me/projects/${slug}`,
+            "image": project.metadata.thumbnail.startsWith("http")
+              ? project.metadata.thumbnail
+              : `https://arslanahmed.me${project.metadata.thumbnail}`,
+            ...(project.metadata.githubUrl && { "codeRepository": project.metadata.githubUrl })
+          }),
+        }}
+      />
       <div className="bg-surface border-b border-border">
         <div className="container mx-auto px-4 md:px-8 pt-20 pb-10 md:pt-32 md:pb-16">
           <Link href="/#projects" className="inline-flex items-center text-sm font-medium text-secondary-text hover:text-foreground transition-colors mb-10">

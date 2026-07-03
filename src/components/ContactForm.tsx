@@ -6,11 +6,11 @@ import { Mail, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 export default function ContactForm() {
   const [result, setResult] = useState("idle");
 
-  const onSubmit = async (event: any) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setResult("Sending....");
     
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.currentTarget);
     // Key is loaded securely from env to avoid Windows Defender issues
     const apiKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
     formData.append("access_key", apiKey);
@@ -24,14 +24,14 @@ export default function ContactForm() {
       const data = await response.json();
       if (data.success) {
         setResult("Form Submitted Successfully");
-        event.target.reset();
+        event.currentTarget.reset();
         
         // Optionally reset the success message after 5 seconds
         setTimeout(() => setResult("idle"), 5000);
       } else {
         setResult("Error");
       }
-    } catch (error) {
+    } catch {
       setResult("Error");
     }
   };
@@ -43,7 +43,7 @@ export default function ContactForm() {
         {result === "Form Submitted Successfully" && (
           <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-3 text-emerald-500 animate-in fade-in slide-in-from-top-2 duration-300">
             <CheckCircle2 className="w-5 h-5 shrink-0" aria-hidden="true" />
-            <p className="text-sm font-medium">Message sent! I'll get back to you soon.</p>
+            <p className="text-sm font-medium">Message sent! I&apos;ll get back to you soon.</p>
           </div>
         )}
 

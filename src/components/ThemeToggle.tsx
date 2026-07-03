@@ -10,8 +10,9 @@ export function ThemeToggle() {
 
   // Avoid hydration mismatch
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (!mounted) {
     return <div className="w-10 h-10 rounded-full bg-surface/50 border border-border/40" />
