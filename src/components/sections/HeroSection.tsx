@@ -24,7 +24,7 @@ export function HeroSection() {
 
       <div className="relative z-20 mt-4">
         <h1 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tighter text-foreground mb-4 leading-[1.1]">
-          {personalInfo.name.split(" ").slice(0, 2).join(" ")}
+          {personalInfo.name}
           <br />
           <span className="text-primary">{personalInfo.role}</span>
         </h1>
