@@ -14,8 +14,8 @@ export const educationData: Education[] = [
     degree: "BS Software Engineering",
     institution: "Government College University Faisalabad",
     url: "https://gcuf.edu.pk/",
-    startDate: "Nov 2022",
-    endDate: "2026",
+    startDate: "Dec 2022",
+    endDate: "Jun 2026",
     description: [
       "Coursework: Object Oriented Programming, Data Structures & Algorithms, Artificial Intelligence, Natural Language Processing, Computer Networks, Cloud Computing",
       "Elected Class Representative for Basic Mathematics, coordinating between students and faculty across morning and evening sections for two semesters"
