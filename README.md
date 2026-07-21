@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arslan Ahmed Portfolio
+
+**[🌐 Live Website: arslanahmed.me](https://arslanahmed.me)**
+
+My personal portfolio website built with Next.js, showcasing my projects, experience, skills, certifications, and technical journey as a Full-Stack Software Engineer.
+
+![Portfolio Preview](public/portfolio-preview.png)
+
+## Features
+
+- **Interactive Project Showcase:** Explore detailed case studies and browse through an organized archive of past work.
+- **Smooth Animations:** Enjoy a fluid browsing experience with scroll-triggered entrance animations.
+- **Dark & Light Mode:** Seamlessly switch between a sleek dark theme or a clean light theme.
+- **Fully Responsive:** Experience a pixel-perfect, mobile-friendly design that adapts to any screen size or device.
+- **Lightning Fast:** Navigate instantly between pages with zero layout shifts and highly optimized asset loading.
+- **Accessible Design:** Built with semantic HTML and reduced-motion support to ensure a great experience for all visitors.
+
+## Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS (v4)
+- **Animations:** Framer Motion
+- **Content:** MDX (next-mdx-remote, gray-matter)
+- **Deployment & Analytics:** Vercel
+
+## Architecture
+
+The application uses the Next.js App Router with a component-driven architecture. Static portfolio data is stored in TypeScript modules, while project case studies are parsed and rendered from MDX content. Interactive client-side features are isolated to minimize the JavaScript bundle size.
+
+## Project Structure
+
+```text
+├── content/                # MDX project case studies
+├── public/                 # Static assets and media
+├── src/
+│   ├── app/                # Next.js App Router (pages, dynamic routes)
+│   ├── components/         # Reusable UI, layout, and section components
+│   ├── data/               # Static TypeScript data sets (experience, skills)
+│   └── lib/                # Utility functions and MDX parsers
+├── next.config.ts          # Next.js configuration
+└── tailwind.config.ts      # Tailwind CSS configuration
+```
 
 ## Getting Started
 
-First, run the development server:
+To run this project locally, ensure you have Node.js installed, then clone the repository and run the following commands:
 
 ```bash
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project uses the following environment variables (optional for local development):
 
-## Learn More
+- `NEXT_PUBLIC_GA_ID`: Google Analytics tracking ID.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The site is deployed on Vercel and takes advantage of Next.js App Router optimizations for fast performance and seamless deployments.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Let's Connect
 
-## Deploy on Vercel
+I'm always open to discussing new opportunities, collaborations, or open-source projects!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Portfolio:** [arslanahmed.me](https://arslanahmed.me)
+- **LinkedIn:** [linkedin.com/in/mearslanahmed](https://www.linkedin.com/in/mearslanahmed/)
+- **GitHub:** [@mearslanahmed](https://github.com/mearslanahmed)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
