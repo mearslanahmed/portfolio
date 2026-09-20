@@ -29,9 +29,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const baseUrl = "https://arslanahmed.me";
   const projectUrl = `${baseUrl}/projects/${slug}`;
   // Use the project thumbnail as the OG image, ensuring it's an absolute URL
-  const ogImage = project.metadata.thumbnail.startsWith("http")
-    ? project.metadata.thumbnail
-    : `${baseUrl}${project.metadata.thumbnail}`;
+  const ogImage = project.metadata.thumbnail
+    ? (project.metadata.thumbnail.startsWith("http")
+        ? project.metadata.thumbnail
+        : `${baseUrl}${project.metadata.thumbnail}`)
+    : `${baseUrl}/profile.webp`;
 
   return {
     title: `${project.metadata.title} | Arslan Ahmed Naseem`,
@@ -107,9 +109,11 @@ export default async function ProjectPage({ params }: Props) {
               "url": "https://arslanahmed.me"
             },
             "url": project.metadata.liveUrl || `https://arslanahmed.me/projects/${slug}`,
-            "image": project.metadata.thumbnail.startsWith("http")
-              ? project.metadata.thumbnail
-              : `https://arslanahmed.me${project.metadata.thumbnail}`,
+            ...(project.metadata.thumbnail ? {
+              "image": project.metadata.thumbnail.startsWith("http")
+                ? project.metadata.thumbnail
+                : `https://arslanahmed.me${project.metadata.thumbnail}`
+            } : {}),
             ...(project.metadata.githubUrl && { "codeRepository": project.metadata.githubUrl })
           }),
         }}

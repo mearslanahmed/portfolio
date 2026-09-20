@@ -37,16 +37,29 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             <Link href={`/projects/${project.slug}`} className="group flex flex-col gap-6 h-full">
               
               {/* Image Media Block */}
-              <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-surface border border-border/50 transition-colors group-hover:border-primary/30 mb-2">
+              <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-surface border border-border/50 transition-colors group-hover:border-primary/30 mb-2 flex items-center justify-center">
                 <div className="absolute inset-0 bg-background/20 group-hover:bg-transparent transition-colors duration-500 z-0 pointer-events-none" />
-                <Image 
-                  src={project.metadata.thumbnail} 
-                  alt={project.metadata.title} 
-                  fill 
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out z-10" 
-                  priority={i < 2}
-                />
+                {project.metadata.thumbnail ? (
+                  <Image 
+                    src={project.metadata.thumbnail} 
+                    alt={project.metadata.title} 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out z-10" 
+                    priority={i < 2}
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-surface via-surface/80 to-primary/10 p-6 text-center z-10">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-3 group-hover:scale-110 transition-transform">
+                      <span className="font-heading font-bold text-2xl">
+                        {project.metadata.title.charAt(0)}
+                      </span>
+                    </div>
+                    <span className="text-xs uppercase tracking-wider font-semibold text-secondary-text group-hover:text-foreground transition-colors">
+                      {project.metadata.technologies[0] || "Project"}
+                    </span>
+                  </div>
+                )}
               </div>
               
               {/* Typography Block */}
