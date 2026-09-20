@@ -1,0 +1,51 @@
+---
+title: "Renovo: Open-Source Subscription & Expense Manager"
+description: "The definitive cross-platform personal subscription tracker and expense manager with automated renewal reminder workflows."
+thumbnail: ""
+technologies: ["React Native", "Expo", "Node.js", "Express", "MongoDB", "Clerk", "Upstash", "Brevo", "Arcjet", "Render"]
+githubUrl: "https://github.com/mearslanahmed/renovo"
+downloadUrl: "https://github.com/mearslanahmed/renovo/releases/tag/v1.0.0"
+order: 3
+---
+
+## Overview
+
+Renovo is an open-source, next-generation subscription tracking and expense management application built for Android and iOS. It combines robust financial tracking with automated reminder workflows to ensure users never experience unexpected recurring charges.
+
+The mobile frontend is powered by **React Native** and **Expo**, while the backend is a scalable **Node.js/Express** REST API hosted on **Render**, integrated with **Upstash Workflow** and **Brevo** for automated email notifications.
+
+## The Problem
+
+With the explosion of SaaS services, streaming platforms, and digital memberships, the average consumer loses hundreds of dollars each year to forgotten free trials, silent price hikes, and overlapping renewal dates. Existing budgeting apps are either overly complex or lack automated, proactive renewal reminders.
+
+## The Solution
+
+Renovo provides a clean, privacy-focused, and open-source solution that centralizes all subscription commitments in one intuitive dashboard. By integrating background workflow automation with **Upstash** and **Brevo API**, Renovo proactively alerts users via email before their subscriptions renew, giving them total control over their recurring finances.
+
+## Key Features
+
+- **Secure Authentication & User Sync:** End-to-end authentication supporting full name onboarding and email OTP verification powered by Clerk and Svix webhooks.
+- **Comprehensive Subscription Tracker:** Track billing frequencies (Weekly, Monthly, Yearly), start dates, renewal milestones, custom brand colors, category tags, and payment methods.
+- **Dynamic Dashboard (Home):** Real-time monthly commitments summary, next closest renewal counter, upcoming renewals carousel for the next 7 days, and quick access to the full library.
+- **Interactive Insights & Analytics:** Visual charts showing monthly commitments, yearly spending projections, average subscription costs, and weekly renewal schedules powered by React Native Gifted Charts.
+- **Automated Workflow Notifications:** Backend cron-less reminder queue using Upstash Workflow and Brevo SMTP to dispatch proactive reminder emails before billing dates.
+- **Global Currency Support:** Live app-wide preference switcher supporting USD, EUR, GBP, INR, PKR, JPY, CAD, AUD, and BRL with local SecureStore caching.
+- **Enterprise-Grade Security:** API protected with Arcjet middleware for rate-limiting, bot detection, and request validation.
+
+## Tech Stack & Architecture
+
+### Mobile Frontend
+- **React Native (0.81.5)** with **Expo (54.0)** for fast, native cross-platform compilation.
+- **Expo Router (6.0)** for modern, file-based routing and deep linking.
+- **TypeScript** for strict end-to-end type safety.
+- **React Native Gifted Charts** for smooth financial data visualization.
+- **Expo Secure Store** for encrypted local persistence of preferences.
+- **PostHog Telemetry** for tracking privacy-friendly engagement metrics.
+
+### Backend & Cloud Architecture
+- **Node.js & Express (v4)** REST API deployed on **Render**.
+- **MongoDB & Mongoose (7.5)** for schema-driven document storage.
+- **Upstash Workflow & QStash** for automated, serverless scheduling and reminder triggering.
+- **Brevo API (SMTP)** for reliable, high-deliverability email alerts.
+- **Arcjet Middleware** for enterprise-level rate limiting and bot mitigation.
+- **Svix** for cryptographic webhook signature validation.
