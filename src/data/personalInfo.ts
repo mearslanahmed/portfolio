@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: "Arslan Ahmed Naseem",
-  email: "arslanahmednaseem@gmail.com",
+  email: "hello@arslanahmed.me",
   linkedin: "https://linkedin.com/in/mearslanahmed",
   github: "https://github.com/mearslanahmed",
   fiverr: "https://www.fiverr.com/users/mearslanahmed",

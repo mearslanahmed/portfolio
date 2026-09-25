@@ -1,110 +1,263 @@
 "use client";
 
-import { useState } from "react";
-import { Mail, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { Loader2, ArrowUpRight, Check, AlertCircle } from "lucide-react";
 
-export default function ContactForm() {
-  const [result, setResult] = useState("idle");
+interface ContactFormProps {
+  onSuccess?: () => void;
+}
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setResult("Sending....");
-    
-    const formData = new FormData(event.currentTarget);
-    // Key is loaded securely from env to avoid Windows Defender issues
-    const apiKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
-    formData.append("access_key", apiKey);
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
+export default function ContactForm({ onSuccess }: ContactFormProps) {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  // UX Rule: Autofocus primary input on mount for immediate typing
+  useEffect(() => {
+    nameInputRef.current?.focus();
+  }, []);
+
+  // Validation helper
+  const validateField = (name: string, value: string): string | undefined => {
+    if (!value.trim()) {
+      if (name === "name") return "Please enter your name";
+      if (name === "email") return "Please enter your email address";
+      if (name === "message") return "Please write a brief message";
+    }
+    if (name === "email" && value.trim()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value.trim())) {
+        return "Please enter a valid email (e.g. name@domain.com)";
+      }
+    }
+    return undefined;
+  };
+
+  const handleBlur = (field: "name" | "email" | "message") => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    const error = validateField(field, formData[field]);
+    setErrors((prev) => ({ ...prev, [field]: error }));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Real-time error clearance once corrected
+    if (touched[name]) {
+      const error = validateField(name, value);
+      setErrors((prev) => ({ ...prev, [name]: error }));
+    }
+  };
+
+  // UX Rule: Support Command/Ctrl + Enter to submit from anywhere in the form
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    // Mark all as touched and validate
+    const nameErr = validateField("name", formData.name);
+    const emailErr = validateField("email", formData.email);
+    const msgErr = validateField("message", formData.message);
+
+    setTouched({ name: true, email: true, message: true });
+    setErrors({ name: nameErr, email: emailErr, message: msgErr });
+
+    if (nameErr || emailErr || msgErr) {
+      return;
+    }
+
+    setStatus("sending");
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
       });
 
-      const data = await response.json();
-      if (data.success) {
-        setResult("Form Submitted Successfully");
-        event.currentTarget.reset();
-        
-        // Optionally reset the success message after 5 seconds
-        setTimeout(() => setResult("idle"), 5000);
+      const resData = await response.json();
+      if (resData.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+        setTouched({});
+        setErrors({});
+        if (onSuccess) onSuccess();
+        setTimeout(() => setStatus("idle"), 6000);
       } else {
-        setResult("Error");
+        setStatus("error");
       }
     } catch {
-      setResult("Error");
+      setStatus("error");
     }
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      {/* Live region for screen readers — announces form status changes */}
-      <div role="alert" aria-live="assertive" aria-atomic="true">
-        {result === "Form Submitted Successfully" && (
-          <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-3 text-emerald-500 animate-in fade-in slide-in-from-top-2 duration-300">
-            <CheckCircle2 className="w-5 h-5 shrink-0" aria-hidden="true" />
-            <p className="text-sm font-medium">Message sent! I&apos;ll get back to you soon.</p>
+    <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} noValidate className="space-y-4 text-left">
+      {/* Status Announcements (A11y live region) */}
+      <div role="status" aria-live="polite">
+        {status === "success" && (
+          <div className="py-3 px-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-600 dark:text-emerald-400 flex items-center gap-2 animate-in fade-in duration-200">
+            <Check className="w-4 h-4 shrink-0 text-emerald-500" />
+            <span>Message sent successfully. I&apos;ll get back to you shortly.</span>
           </div>
         )}
 
-        {result === "Error" && (
-          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3 text-red-500 animate-in fade-in slide-in-from-top-2 duration-300">
-            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" aria-hidden="true" />
-            <p className="text-sm">Something went wrong. Please try again or email me directly.</p>
+        {status === "error" && (
+          <div className="py-3 px-4 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-600 dark:text-red-400 flex items-start gap-2 animate-in fade-in duration-200">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-500" />
+            <span>Unable to send message. Please try again or reach out via email.</span>
           </div>
         )}
       </div>
 
-      <div className="space-y-2">
-        <label htmlFor="name" className="text-sm font-bold text-secondary-text tracking-wide uppercase">Your Name</label>
+      {/* Name Field */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <label htmlFor="name" className="block text-xs font-semibold text-secondary-text uppercase tracking-wider">
+            Name <span className="text-foreground/40 font-normal">*</span>
+          </label>
+        </div>
         <input
+          ref={nameInputRef}
           type="text"
           id="name"
           name="name"
+          value={formData.name}
+          onChange={handleChange}
+          onBlur={() => handleBlur("name")}
+          autoComplete="name"
           required
-          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-          placeholder="Your name"
+          aria-required="true"
+          aria-invalid={!!errors.name}
+          aria-describedby={errors.name ? "name-error" : undefined}
+          placeholder="Your full name"
+          className={`w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-secondary-text/40 focus:outline-none transition-colors ${
+            errors.name && touched.name
+              ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/20"
+              : "border-border focus:border-foreground"
+          }`}
         />
+        {errors.name && touched.name && (
+          <p id="name-error" className="text-xs text-red-500 flex items-center gap-1 mt-1 animate-in fade-in duration-150">
+            <AlertCircle className="w-3 h-3" />
+            {errors.name}
+          </p>
+        )}
       </div>
-      <div className="space-y-2">
-        <label htmlFor="email" className="text-sm font-bold text-secondary-text tracking-wide uppercase">Email Address</label>
+
+      {/* Email Field */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <label htmlFor="email" className="block text-xs font-semibold text-secondary-text uppercase tracking-wider">
+            Email <span className="text-foreground/40 font-normal">*</span>
+          </label>
+        </div>
         <input
           type="email"
           id="email"
           name="email"
+          inputMode="email"
+          value={formData.email}
+          onChange={handleChange}
+          onBlur={() => handleBlur("email")}
+          autoComplete="email"
           required
-          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-          placeholder="you@example.com"
+          aria-required="true"
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "email-error" : undefined}
+          placeholder="you@company.com"
+          className={`w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-secondary-text/40 focus:outline-none transition-colors ${
+            errors.email && touched.email
+              ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/20"
+              : "border-border focus:border-foreground"
+          }`}
         />
+        {errors.email && touched.email && (
+          <p id="email-error" className="text-xs text-red-500 flex items-center gap-1 mt-1 animate-in fade-in duration-150">
+            <AlertCircle className="w-3 h-3" />
+            {errors.email}
+          </p>
+        )}
       </div>
-      <div className="space-y-2">
-        <label htmlFor="message" className="text-sm font-bold text-secondary-text tracking-wide uppercase">Project Details</label>
+
+      {/* Message Field */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <label htmlFor="message" className="block text-xs font-semibold text-secondary-text uppercase tracking-wider">
+            Message <span className="text-foreground/40 font-normal">*</span>
+          </label>
+          <span className="text-[11px] text-secondary-text/60 font-mono">
+            {formData.message.length}/1000
+          </span>
+        </div>
         <textarea
           id="message"
           name="message"
+          rows={4}
+          maxLength={1000}
+          value={formData.message}
+          onChange={handleChange}
+          onBlur={() => handleBlur("message")}
           required
-          rows={3}
-          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
-          placeholder="Project details, timeline, budget..."
+          aria-required="true"
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
+          placeholder="Tell me about your project, timeline, or idea..."
+          className={`w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-secondary-text/40 focus:outline-none transition-colors resize-none ${
+            errors.message && touched.message
+              ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/20"
+              : "border-border focus:border-foreground"
+          }`}
         />
-      </div>
-      <button
-        type="submit"
-        disabled={result === "Sending...."}
-        className="w-full inline-flex h-12 items-center justify-center rounded-xl bg-foreground px-8 font-bold text-background shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all mt-2 disabled:opacity-70 disabled:pointer-events-none"
-      >
-        {result === "Sending...." ? (
-          <>
-            <Loader2 className="mr-3 h-5 w-5 animate-spin" />
-            Sending...
-          </>
-        ) : (
-          <>
-            Send Message
-            <Mail className="ml-3 h-5 w-5" />
-          </>
+        {errors.message && touched.message && (
+          <p id="message-error" className="text-xs text-red-500 flex items-center gap-1 mt-1 animate-in fade-in duration-150">
+            <AlertCircle className="w-3 h-3" />
+            {errors.message}
+          </p>
         )}
-      </button>
+      </div>
+
+      {/* Submit Button */}
+      <div className="pt-1">
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="w-full inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-foreground text-background text-sm font-semibold hover:opacity-90 active:scale-[0.99] transition-all disabled:opacity-60 disabled:pointer-events-none cursor-pointer"
+        >
+          {status === "sending" ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Sending...</span>
+            </>
+          ) : (
+            <>
+              <span>Send Message</span>
+              <ArrowUpRight className="h-4 w-4" />
+            </>
+          )}
+        </button>
+      </div>
     </form>
   );
 }

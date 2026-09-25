@@ -1,74 +1,110 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
-import { Mail } from 'lucide-react';
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+"use client";
+
+import React, { useState } from "react";
+import dynamic from "next/dynamic";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, MessageSquare, Copy, Check, ChevronDown, X } from "lucide-react";
 import { FadeIn } from "@/components/ui/fade-in";
 import { personalInfo } from "@/data/personalInfo";
 
-const ContactForm = dynamic(() => import("@/components/ContactForm"));
+const ContactForm = dynamic(() => import("@/components/ContactForm"), {
+  ssr: false,
+});
 
 export function ContactSection() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personalInfo.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-32 mb-16 md:mb-20">
-      <FadeIn>
-        <div className="flex items-center justify-between mb-6">
-          <h2 id="contact-heading" className="text-4xl font-heading font-bold flex items-center gap-4">
-            Let&apos;s Talk
-          </h2>
-          <div className="h-px bg-border flex-1 ml-8 hidden md:block" />
-        </div>
-        <p className="text-lg text-secondary-text max-w-3xl mb-16 leading-relaxed">
-          Got an interesting project in mind, need some help scaling your architecture, or just want to chat about code? Drop me a message below and let&apos;s bring your project to life.
+    <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-32 mb-24 md:mb-32">
+      <FadeIn className="max-w-2xl mx-auto text-center">
+        <h2 id="contact-heading" className="text-4xl md:text-5xl font-heading font-bold mb-4 tracking-tight">
+          Let&apos;s Talk
+        </h2>
+
+        <p className="text-secondary-text text-base md:text-lg mb-8 leading-relaxed max-w-lg mx-auto">
+          Have an interesting project in mind, need help scaling your architecture, or want to collaborate? Let&apos;s build something great.
         </p>
+
+        {/* Action Buttons: Balanced 2-Pill Layout */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-foreground px-6 text-sm font-semibold text-background hover:opacity-90 active:scale-95 transition-all cursor-pointer shadow-sm"
+          >
+            {isOpen ? (
+              <>
+                <X className="h-4 w-4" />
+                <span>Close Form</span>
+              </>
+            ) : (
+              <>
+                <MessageSquare className="h-4 w-4" />
+                <span>Send a Message</span>
+                <ChevronDown className="h-3.5 w-3.5 opacity-70" />
+              </>
+            )}
+          </button>
+
+          {/* Visually prominent email pill with 1-click copy */}
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full border border-border bg-surface px-5 text-sm font-semibold text-foreground hover:bg-background hover:border-foreground/30 active:scale-95 transition-all cursor-pointer"
+            title="Click to copy email"
+          >
+            <Mail className="h-4 w-4 text-secondary-text" />
+            <span className="font-mono text-xs md:text-sm font-medium">
+              {copied ? "Email Copied to Clipboard!" : personalInfo.email}
+            </span>
+            {copied ? (
+              <Check className="h-3.5 w-3.5 text-emerald-500" />
+            ) : (
+              <Copy className="h-3.5 w-3.5 text-secondary-text opacity-70" />
+            )}
+          </button>
+        </div>
+
+        {/* Revealing Form with Smooth Motion */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, scale: 0.98, y: -8 }}
+              animate={{ opacity: 1, height: "auto", scale: 1, y: 0 }}
+              exit={{ opacity: 0, height: 0, scale: 0.98, y: -8 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden mt-8 text-left"
+            >
+              <div className="rounded-3xl border border-border bg-surface/80 p-6 md:p-8 max-w-lg mx-auto shadow-lg">
+                <div className="flex items-center justify-between mb-5 pb-4 border-b border-border/70">
+                  <div>
+                    <h3 className="text-base font-semibold text-foreground">Direct Message</h3>
+                    <p className="text-xs text-secondary-text">I typically respond within 24 hours.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsOpen(false)}
+                    className="p-1.5 rounded-lg text-secondary-text hover:text-foreground hover:bg-background transition-colors cursor-pointer"
+                    aria-label="Close form"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                
+                <ContactForm onSuccess={() => setTimeout(() => setIsOpen(false), 3000)} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </FadeIn>
-
-      <div className="grid md:grid-cols-2 gap-16 md:gap-12">
-        <FadeIn>
-          <h3 className="text-2xl font-heading font-bold mb-8">Reach Out Directly</h3>
-          <div className="space-y-6">
-            <a href={`mailto:${personalInfo.email}`} aria-label={`Email ${personalInfo.name}`} className="flex items-center gap-6 group">
-              <div className="w-16 h-16 rounded-2xl bg-surface border border-border flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-sm">
-                <Mail className="h-7 w-7" />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground text-xl mb-1">Email</p>
-                <p className="text-secondary-text group-hover:text-primary transition-colors text-lg">{personalInfo.email}</p>
-              </div>
-            </a>
-
-            <a href={personalInfo.linkedin} aria-label="LinkedIn Profile" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group">
-              <div className="w-16 h-16 rounded-2xl bg-surface border border-border flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-sm">
-                <FaLinkedin className="h-7 w-7" />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground text-xl mb-1">LinkedIn</p>
-                <p className="text-secondary-text group-hover:text-primary transition-colors text-lg">Connect with me</p>
-              </div>
-            </a>
-
-            <a href={personalInfo.github} aria-label="GitHub Profile" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group">
-              <div className="w-16 h-16 rounded-2xl bg-surface border border-border flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-sm">
-                <FaGithub className="h-7 w-7" />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground text-xl mb-1">GitHub</p>
-                <p className="text-secondary-text group-hover:text-primary transition-colors text-lg">Check out my repos</p>
-              </div>
-            </a>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.2}>
-          <div className="p-6 md:p-8 border border-border rounded-2xl w-full max-w-[400px] bg-surface/30">
-            <div className="mb-8">
-              <h3 className="text-2xl font-heading font-bold mb-2">Send a Message</h3>
-              <p className="text-secondary-text">I typically reply within 24 hours.</p>
-            </div>
-            
-            <ContactForm />
-          </div>
-        </FadeIn>
-      </div>
     </section>
   );
 }
